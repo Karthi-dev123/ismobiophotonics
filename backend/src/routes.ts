@@ -1,13 +1,20 @@
 import { Router } from 'express';
+import type { RateLimitOptions } from './middleware/rateLimit';
+import { createAuthRouter } from './modules/auth/auth.routes';
 
-export const apiRouter = Router();
+export interface ApiRouterOptions {
+  authRateLimit: RateLimitOptions;
+}
 
-apiRouter.get('/health', (_req, res) => {
-  res.json({ status: 'ok' });
-});
+export function createApiRouter(options: ApiRouterOptions): Router {
+  const router = Router();
 
-// Feature routers are mounted here in later phases:
-// apiRouter.use('/auth', authRouter);
-// apiRouter.use('/projects', projectsRouter);
-// apiRouter.use('/tasks', tasksRouter);
-// apiRouter.use('/dashboard', dashboardRouter);
+  router.get('/health', (_req, res) => {
+    res.json({ status: 'ok' });
+  });
+
+  router.use('/auth', createAuthRouter(options.authRateLimit));
+  // Mounted in later phases: /projects, /tasks, /dashboard
+
+  return router;
+}

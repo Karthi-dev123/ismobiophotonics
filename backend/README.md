@@ -36,6 +36,7 @@ Seeded demo accounts: `alice@example.com` / `bob@example.com`, password `Passwor
 | `npm run db:deploy` | Apply migrations in production |
 | `npm run db:seed` | Insert demo data (idempotent) |
 | `npm run db:reset` | Drop, re-migrate and re-seed the dev database |
+| `./scripts/smoke.sh <url>` | End-to-end auth smoke test against a running API |
 
 ## Environment variables
 | Variable | Required | Example | Description |
@@ -58,10 +59,12 @@ prisma/            schema.prisma, migrations/, seed.ts
 src/app.ts         Express app factory (middleware order, routes, error handling)
 src/server.ts      HTTP listener + graceful shutdown
 src/config/env.ts  validated environment
-src/lib/           prisma client, logger (redacts secrets), error classes
-src/middleware/    validate (Zod), notFound, errorHandler
+src/lib/           prisma client, logger (redacts secrets), errors, jwt, password (bcrypt), asyncHandler
+src/middleware/    validate (Zod), requireAuth (JWT), rateLimit, notFound, errorHandler
 src/routes.ts      mounts /api routers
-src/modules/       feature modules (auth, projects, tasks, dashboard) — added in later phases
+src/modules/auth/  register, login, logout (token revocation), me
+src/modules/       projects, tasks, dashboard — added in later phases
+scripts/smoke.sh   smoke test against a running API (local or deployed)
 tests/             Vitest + Supertest suites against a real PostgreSQL test DB
 ```
 
