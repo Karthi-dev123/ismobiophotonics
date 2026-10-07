@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+
+# builds
+dist/
+build/
+web-build/
+.expo/
+*.apk
+*.aab
+coverage/
+
+# env (examples are committed)
+.env
+.env.*
+!.env.example
+
+# logs / os / editor
+*.log
+.DS_Store
+.vscode/
+.idea/
