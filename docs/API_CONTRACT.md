@@ -35,6 +35,7 @@ Single backend used by **both** the web app and the mobile app. Changes to this 
 | 401 | `INVALID_CREDENTIALS` | wrong email or password (same message for both) |
 | 404 | `NOT_FOUND` | resource does not exist **or belongs to another user**; unknown route |
 | 409 | `EMAIL_TAKEN` | registration with an existing email (case-insensitive) |
+| 409 | `CONFLICT` | any other unique-constraint violation (generic fallback; not expected in normal use) |
 | 413 | `PAYLOAD_TOO_LARGE` | body over limit |
 | 429 | `RATE_LIMITED` | too many auth attempts from the same IP |
 | 500 | `INTERNAL_ERROR` | unexpected; no internals exposed |

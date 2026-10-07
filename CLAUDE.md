@@ -42,7 +42,7 @@ prisma.task.findFirst({ where: { id, project: { userId } } })
 ## Contract essentials (full detail in docs/API_CONTRACT.md)
 - Enums: ProjectStatus `NOT_STARTED|IN_PROGRESS|COMPLETED`; TaskStatus `PENDING|IN_PROGRESS|COMPLETED`; TaskPriority `LOW|MEDIUM|HIGH`.
 - Error envelope: `{ "error": { "code", "message", "details?" } }`.
-- Codes: 400 `VALIDATION_ERROR`/`INVALID_JSON`, 401 `UNAUTHORIZED`/`TOKEN_EXPIRED`/`INVALID_CREDENTIALS`, 404 `NOT_FOUND`, 409 `EMAIL_TAKEN`, 413 `PAYLOAD_TOO_LARGE`, 429 `RATE_LIMITED`, 500 `INTERNAL_ERROR`.
+- Codes: 400 `VALIDATION_ERROR`/`INVALID_JSON`, 401 `UNAUTHORIZED`/`TOKEN_EXPIRED`/`INVALID_CREDENTIALS`, 404 `NOT_FOUND`, 409 `EMAIL_TAKEN`/`CONFLICT`, 413 `PAYLOAD_TOO_LARGE`, 429 `RATE_LIMITED`, 500 `INTERNAL_ERROR`.
 - Success: `{ data }` for resources; `{ user, token }` / `{ user }` for auth; `204` for delete/logout.
 - User objects never include the password hash.
 
