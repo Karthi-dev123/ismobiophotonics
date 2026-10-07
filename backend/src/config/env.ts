@@ -12,6 +12,8 @@ const envSchema = z.object({
     .min(1)
     .transform((value) => value.split(',').map((origin) => origin.trim()).filter(Boolean)),
   AUTH_RATE_LIMIT_WINDOW_MS: z.coerce.number().int().positive().default(15 * 60 * 1000),
+  // Number of reverse proxies in front of the app in production (for the real client IP).
+  TRUST_PROXY_HOPS: z.coerce.number().int().min(0).default(1),
   AUTH_RATE_LIMIT_MAX: z.coerce.number().int().positive().default(10),
 });
 

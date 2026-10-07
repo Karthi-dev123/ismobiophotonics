@@ -22,4 +22,4 @@ Decisions approved in Phase 0. Rationale details: `docs/MASTER_PLAN.md` Parts 3,
 | D16 | Deleting a project cascades to its tasks | Tasks cannot exist without a project. |
 | D17 | Emails stored lowercase and trimmed; uniqueness case-insensitive | "Email addresses must be unique" — `A@x.com` and `a@x.com` are the same address. |
 | D18 | Single monorepo with plain folders `backend/ web/ mobile/ docs/` (no workspace tooling) | One public link; avoids Expo/Metro monorepo friction. |
-| D19 | Hosting: backend + Postgres on Render (Neon as DB alternative), web on Vercel, APK via EAS | Free tiers, low ops. |
+| D19 | Hosting: PostgreSQL on Neon, backend on Koyeb (Docker image from GitHub), web on Vercel, APK via EAS. *(Changed in Phase 2 from Render at the owner's request.)* | Free tiers, no expiring database, standard Docker image portable to any host. |

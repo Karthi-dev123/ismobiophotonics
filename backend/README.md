@@ -4,7 +4,7 @@ One REST API used by both the web app and the mobile app. Contract: [`../docs/AP
 
 ## Prerequisites
 - Node.js 22+
-- PostgreSQL 14+ (local install, Docker, or a hosted instance such as Neon/Render)
+- PostgreSQL 14+ (local install, Docker, or a hosted instance such as Neon)
 
 ## Database setup (local)
 Using Docker:
@@ -50,6 +50,7 @@ Seeded demo accounts: `alice@example.com` / `bob@example.com`, password `Passwor
 | `CORS_ORIGIN` | yes | `http://localhost:5173` | Comma-separated web origins allowed to call the API |
 | `AUTH_RATE_LIMIT_WINDOW_MS` | no | `900000` | Auth rate-limit window |
 | `AUTH_RATE_LIMIT_MAX` | no | `10` | Max auth attempts per IP per window |
+| `TRUST_PROXY_HOPS` | no | `1` | Reverse proxies in front of the API in production (used to find the client IP) |
 
 The server validates these at startup and refuses to start if any are invalid.
 
@@ -69,3 +70,10 @@ tests/             Vitest + Supertest suites against a real PostgreSQL test DB
 ```
 
 Request pipeline: `helmet → cors → request logger → JSON parser (100 kb) → /api routes → 404 → error handler`.
+
+## Docker
+```bash
+docker build -t pms-api backend
+docker run -p 8000:8000 --env-file backend/.env -e PORT=8000 pms-api
+```
+The container applies migrations on start. Deployment guide: [`../docs/DEPLOYMENT.md`](../docs/DEPLOYMENT.md).

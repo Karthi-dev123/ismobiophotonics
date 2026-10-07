@@ -16,9 +16,10 @@ Files allowed: `backend/src/modules/auth/**`, `backend/src/lib/jwt.ts`, `backend
 7. Routes: `POST /register` (201), `POST /login` (200), `POST /logout` (204, auth), `GET /me` (200, auth).
 
 ## Track B — First deployment (M8)
-Files allowed: `render.yaml` (root), `docs/DEPLOYMENT.md`, `backend/package.json` scripts.
-- Render Blueprint: web service (`rootDir: backend`, build `npm ci && npm run build && npm run db:deploy`, start `npm start`, health check `/api/health`) + free Postgres; env `NODE_ENV=production`, `JWT_SECRET` generated, `CORS_ORIGIN` placeholder until web is deployed.
-- **Needs you:** a Render account connected to this GitHub repo (or Neon for the DB). I prepare config + docs; you click "New Blueprint" and share the URL. Then I smoke-test the live API.
+Files allowed: `backend/Dockerfile`, `backend/.dockerignore`, `docs/DEPLOYMENT.md`, `backend/package.json`.
+*(Revised: host changed from Render to **Koyeb + Neon** at the owner's request.)*
+- Multi-stage Docker image; container runs `prisma migrate deploy` then the server; health check `/api/health`; env `NODE_ENV=production`, `JWT_SECRET` secret, `CORS_ORIGIN` placeholder until web is deployed; `TRUST_PROXY_HOPS` configurable.
+- **Needs you:** Neon project (direct connection string) and a Koyeb web service built from this repo's `backend/Dockerfile`, per `docs/DEPLOYMENT.md`. Then share the URL; I smoke-test the live API.
 
 ## Tests (must pass)
 Register: success 201 + token + no hash in body; DB stores bcrypt hash ≠ plaintext; duplicate email 409 incl. different case; missing/blank fullName, bad email, short (7) / long (73) password → 400 with details; extra fields (`passwordHash`, `id`) ignored.

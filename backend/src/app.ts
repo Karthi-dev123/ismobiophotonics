@@ -21,8 +21,8 @@ export function createApp(options: AppOptions = {}): Express {
 
   app.disable('x-powered-by');
   if (env.NODE_ENV === 'production') {
-    // Behind Render/Vercel proxies: use X-Forwarded-For for client IP (rate limiting).
-    app.set('trust proxy', 1);
+    // Behind the host's load balancer: use X-Forwarded-For for the client IP (rate limiting).
+    app.set('trust proxy', env.TRUST_PROXY_HOPS);
   }
 
   app.use(helmet());
